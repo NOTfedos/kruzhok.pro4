@@ -2,17 +2,18 @@ import requests
 import csv
 import json
 import sys
+import time
 
 
-DEBUG = True
-DIRECT_URL = "http://dop.edu.ru/organization/list?institution_type=188&orientation=3&region=42&page=1&perPage=10000"
+DEBUG = False
+DIRECT_URL = "http://dop.edu.ru/organization/list?institution_type=188&orientation=3&region=42&page=1&perPage=20"
 
 
 def main():
 
     try:
         r = requests.get(DIRECT_URL)
-        r.encoding = 'utf-8'
+        r.encoding = "utf-8"
         json_data = r.json()
     except BaseException as e:
         print("request with error:", repr(e))
@@ -23,16 +24,19 @@ def main():
         print("get error in json:", json_data["error"])
         sys.exit(0)
 
-    arr = []
+    orgs_list = []
 
     # parsing info
     for org in json_data["data"]["list"]:
-        arr.append([org["full_name"], org["name"], org["site_url"]])
+        orgs_list.append([org["full_name"], org["name"], org["site_url"]])
 
     # write into CSV
-    with open("output.csv", "w") as output_file:
+    with open("output.csv", "w", encoding="utf-8") as output_file:
         writer = csv.writer(output_file)
-        writer.writerows(arr)
+        writer.writerow(["Полное название организации",
+                         "Краткое название организации",
+                         "Адрес сайта организации"])
+        writer.writerows(orgs_list)
 
     # DEBUG out json response
     if DEBUG:
@@ -43,4 +47,6 @@ def main():
 
 
 if __name__ == "__main__":
+    timing = time.time()
     main()
+    print("Finished in", (time.time() - timing), "seconds")
