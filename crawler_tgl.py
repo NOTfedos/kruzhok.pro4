@@ -15,12 +15,12 @@ def main():
         r.encoding = 'utf-8'
         json_data = r.json()
     except BaseException as e:
-        print("request with error" + repr(e))
+        print("request with error:", repr(e))
         sys.exit(0)
 
     # if got error: true in json response
     if not json_data["success"]:
-        print("get error in json:", + json_data["error"])
+        print("get error in json:", json_data["error"])
         sys.exit(0)
 
     arr = []
@@ -38,6 +38,8 @@ def main():
     if DEBUG:
         with open('data.json', 'w', encoding="utf-8") as output_file:
             json.dump(json_data, output_file, ensure_ascii=False)
+
+    print("Success")
 
 
 if __name__ == "__main__":
