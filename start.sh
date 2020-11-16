@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 pyv="$(python3 -V 2>&1)"
 version=$(echo "$pyv" | grep -Po '(?<=Python )(.+)')
 echo "$version"
@@ -14,4 +16,7 @@ then
     exit
 fi
 
-python3 -m pip install requests
+python3 -m venv .
+source bin/activate
+pip3 install requests
+chmod 777 ./crawler_tgl.py
