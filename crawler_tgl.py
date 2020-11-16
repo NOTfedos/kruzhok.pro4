@@ -6,7 +6,7 @@ import time
 
 
 DEBUG = False
-DIRECT_URL = "http://dop.edu.ru/organization/list?institution_type=188&orientation=3&region=42&page=1&perPage=20"
+DIRECT_URL = "http://dop.edu.ru/organization/list?institution_type=188&orientation=3&page=1&perPage=9000&region=42"
 
 
 def main():
